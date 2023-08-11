@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마우스 이벤트</title>
+    <style>
+        body{
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+        h1{
+            color:#fff;
+        }
+        .box{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: aqua;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Test</h1>
+    <div class="box"></div>
+    <script>
+        const h1 = document.querySelector("h1")
+        const box = document.querySelector(".box")
+        //마우스 좌표 전달
+        //도착해야 하는 목표위치값
+        let tgX = 0
+        let tgY = 0
+        //현재 위치
+        let x = 0
+        let y = 0
+        //속도
+        let speed = 0.02;
+        //움직임 함수 정의
+        function moveFn(event){
+            //현재 마우스 위치
+            x = event.clientX;
+            y = event.clientY;
+            console.log(x)
+            //위치값을 글자 출력
+            h1.innerHTML = `x: ${x} , y: ${y}`
+        }
+        window.addEventListener("mousemove", moveFn)
+        function loop(){
+            //새로운 도착위치값 += (현재위치 - 도착위치) * 속도
+             tgX += (x - tgX) * speed;
+             tgY += (y - tgY) * speed;
+             //화면 갱신
+             box.style.transform = `translate(${tgX}px , ${tgY}px)`;
+             //requestAnimationFrame()애니메이션을 부드럽게 처리하기 위해 사용하는 함수
+             window.requestAnimationFrame(loop)
+
+
+        }
+        loop();
+
+    </script>
+</body>
+</html>
